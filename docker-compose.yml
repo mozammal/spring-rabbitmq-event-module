@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.8.18-management-alpine
+    container_name: rabbitmq
+    ports:
+      -  "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      timeout: 20s
+      retries: 3
+    networks:
+      - spring-rabbitmq-tier
+  app:
+    image: spring-rabbitmq-event-module:0.0.1-SNAPSHOT
+    container_name: app
+    ports:
+      - "8080:8080"
+    env_file:
+      - spring-rabbitmq-event.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - spring-rabbitmq-tier
+
+networks:
+  spring-rabbitmq-tier:
+    driver:
+     bridge
