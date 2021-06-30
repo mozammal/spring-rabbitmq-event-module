@@ -9,8 +9,8 @@ The only dependencies for running this example are:
 - [httpie](https://github.com/httpie/httpie)
 
 ```sh
-$ git clone https://github.com/mozammal/social-bookmarks.git
-$ cd social-bookmarks
+$ git clone https://github.com/mozammal/spring-rabbitmq-event-module.git
+$ cd spring-rabbitmq-event-module
 $ mvn clean package
 $ mvn jib:dockerBuild
 $ docker-compose up -d 
